@@ -1,4 +1,3 @@
-import "./app.postcss"
 import App from "./App.svelte"
 import "./main.css"
 
