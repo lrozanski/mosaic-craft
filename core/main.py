@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -25,7 +28,7 @@ class Params(BaseModel):
     blur_ksize: int
     min_area_threshold: int
     font_scale: float
-    font_thickness: float
+    font_thickness: int
 
 
 class Image(BaseModel):
@@ -39,11 +42,10 @@ async def root():
 
 
 @app.post("/process")
-async def say_hello(image: Image):
-    output_path = "."
+async def process(image: Image):
+    downloads_path = os.path.join(Path.home(), "Downloads")
+    output_path = os.path.join(downloads_path, "output.png")
 
-    (output_path, posterize_levels, num_clusters, blur_ksize, min_area_threshold,
-     font_scale, font_thickness) = image.params
-
-    process_image(image.data, output_path, posterize_levels, num_clusters, blur_ksize, min_area_threshold,
-                  font_scale, font_thickness)
+    process_image(image.data, output_path, image.params.posterize_levels, image.params.num_clusters,
+                  image.params.blur_ksize, image.params.min_area_threshold,
+                  image.params.font_scale, image.params.font_thickness)

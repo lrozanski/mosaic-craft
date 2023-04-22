@@ -14,6 +14,6 @@
 
 <style>
     main {
-        @apply flex flex-row items-center justify-center text-gray-400;
+        @apply flex flex-row items-center justify-center text-gray-300;
     }
 </style>

@@ -6,27 +6,19 @@
     export let value: string
     export let min: number
     export let max: number
+    export let step = 1
     export let updateParam: ChangeEventHandler<any>
-
-    const range = (start: number, end: number) => Array.from({length: +end - start + 1}, (_, i) => +start + i)
-
-    const datalistName = `datalist_${name}`
-    const listItems = range(min, max)
-    console.log(listItems)
 </script>
 
 <div class="grid grid-cols-12 gap-x-2 px-2 py-1">
-    <label class="col-span-4 text-right">{label}:</label>
-    <input class="col-span-7" id="num_clusters" type="range" name="{name}" value="{value}" min="{min}" max="{max}" step="1" required on:mousemove={updateParam}
-           list="{datalistName}" />
-    <datalist id="{datalistName}">
-        {#each listItems as item}
-            <option value="{item}" />
-        {/each}
-    </datalist>
-    <span class="col-span-1 text-center">{value}</span>
+    <label class="col-span-6 text-right" for="{name}">{label}:</label>
+    <input class="param col-span-6" id="{name}" type="number" name="{name}" value="{value}" min="{min}" max="{max}" step="{step}" required on:change="{updateParam}"
+           autocomplete="off" />
+<!--    <span class="col-span-2 text-center">{value}</span>-->
 </div>
 
 <style>
-
+    .param {
+        @apply bg-gray-700 rounded px-2 py-1;
+    }
 </style>
