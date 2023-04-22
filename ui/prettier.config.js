@@ -12,7 +12,7 @@ module.exports =
         trailingComma: "es5",
         useTabs: false,
         plugins: [
-            require("prettier-plugin-tailwindcss"),
             require("prettier-plugin-svelte"),
+            require("prettier-plugin-tailwindcss"),
         ],
     }
