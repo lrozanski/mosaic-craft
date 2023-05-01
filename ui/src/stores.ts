@@ -69,3 +69,4 @@ export const imageStore = writable<string | null>(null)
 export const processedImageStore = writable<string | null>(null)
 
 export const imageProcessingParams = writable<ImageProcessingParams>(defaultProcessingParams)
+export const processedImageAlphaStore = writable<number>(0.5)
