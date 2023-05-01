@@ -1,4 +1,5 @@
 import base64
+
 import cv2
 import numpy as np
 
@@ -88,5 +89,30 @@ def process_image(base64_image: str, output_path: str, posterize_levels: int, nu
     result = put_labels(contours_image, posterized_image, filtered_contours, font_scale, font_thickness)
     cv2.imwrite(output_path, result)
 
+    return image_to_base64(result)
+
+
 # process_image("input_image.png", "output_image.png", posterize_levels=6, num_clusters=5, blur_ksize=3,
 #               min_area_threshold=3000, font_scale=0.7, font_thickness=2)
+
+
+def image_to_base64(image, image_format=".png"):
+    # Determine the appropriate MIME type based on the format
+    mime_type = "image/png" if image_format == ".png" else "image/jpeg"
+
+    # Save the image to a buffer
+    success, buffer = cv2.imencode(image_format, image)
+
+    if not success:
+        raise ValueError("Failed to encode image")
+
+    # Convert the buffer to bytes
+    image_bytes = buffer.tobytes()
+
+    # Encode the bytes using base64
+    base64_str = base64.b64encode(image_bytes).decode("utf-8")
+
+    # Create the data URL by combining the MIME type and the base64 string
+    data_url = f"data:{mime_type};base64,{base64_str}"
+
+    return data_url

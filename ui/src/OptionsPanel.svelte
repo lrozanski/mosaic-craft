@@ -1,7 +1,7 @@
 <script lang="ts">
     import ProcessingParam from "./ProcessingParam.svelte"
     import type {ImageProcessingParams} from "./stores"
-    import {imageProcessingParams, imageStore} from "./stores"
+    import {imageProcessingParams, imageStore, processedImageStore} from "./stores"
 
     let image: string
     let params: ImageProcessingParams
@@ -41,7 +41,12 @@
             },
             body: JSON.stringify(requestBody),
         })
-        console.log(response)
+        // console.log(response)
+
+        if (response.ok) {
+            const body = await response.json()
+            processedImageStore.set(body.data)
+        }
     }
 </script>
 

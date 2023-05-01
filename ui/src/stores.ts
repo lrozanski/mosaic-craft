@@ -66,4 +66,6 @@ const defaultProcessingParams: ImageProcessingParams = {
 }
 
 export const imageStore = writable<string | null>(null)
+export const processedImageStore = writable<string | null>(null)
+
 export const imageProcessingParams = writable<ImageProcessingParams>(defaultProcessingParams)

@@ -46,6 +46,8 @@ async def process(image: Image):
     downloads_path = os.path.join(Path.home(), "Downloads")
     output_path = os.path.join(downloads_path, "output.png")
 
-    process_image(image.data, output_path, image.params.posterize_levels, image.params.num_clusters,
-                  image.params.blur_ksize, image.params.min_area_threshold,
-                  image.params.font_scale, image.params.font_thickness)
+    result = process_image(image.data, output_path, image.params.posterize_levels, image.params.num_clusters,
+                           image.params.blur_ksize, image.params.min_area_threshold,
+                           image.params.font_scale, image.params.font_thickness)
+
+    return {"data": result}
