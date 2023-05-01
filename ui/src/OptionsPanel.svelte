@@ -59,6 +59,8 @@
         <ProcessingParam name="min_area_threshold" label="Min Area Threshold" value="{params.min_area_threshold}" min="0" max="5000" step="100" updateParam="{updateParam}" />
         <ProcessingParam name="font_scale" label="Font Scale" value="{params.font_scale}" min="0.1" max="2.0" step="0.1" updateParam="{updateParam}" />
         <ProcessingParam name="font_thickness" label="Font Thickness" value="{params.font_thickness}" min="1" max="5" updateParam="{updateParam}" />
+        <ProcessingParam name="contour_color" label="Contour Color" value="{params.contour_color}" type="color" updateParam="{updateParam}" />
+        <ProcessingParam name="contour_thickness" label="Contour Thickness" value="{params.contour_thickness}" min="1" max="5" updateParam="{updateParam}" />
         <button class="process-button">Process</button>
     </form>
 </div>

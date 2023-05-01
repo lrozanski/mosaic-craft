@@ -75,7 +75,9 @@ def put_labels(image, posterized_image, filtered_contours, font_scale, font_thic
 
 
 def process_image(base64_image: str, output_path: str, posterize_levels: int, num_clusters: int, blur_ksize: int,
-                  min_area_threshold: int, font_scale: float, font_thickness: float):
+                  min_area_threshold: int, font_scale: float, font_thickness: float,
+                  contour_color: (int, int, int, int) = (0, 0, 0, 255),
+                  contour_thickness: int = 1):
     # image = cv2.imread(input_path)
     image_data = base64.b64decode(base64_image.split(',')[1])
     image_np = np.frombuffer(image_data, np.uint8)
@@ -86,7 +88,24 @@ def process_image(base64_image: str, output_path: str, posterize_levels: int, nu
     clustered_image = cluster_colors(blurred_image, num_clusters)
     contours_image, filtered_contours = generate_contours(clustered_image, min_area_threshold)
 
-    result = put_labels(contours_image, posterized_image, filtered_contours, font_scale, font_thickness)
+    # Create a new blank image with the same dimensions as the input image and an alpha channel
+    height, width, _ = image.shape
+    result = np.zeros((height, width, 4), dtype=np.uint8)
+
+    # Draw the contours on the result image
+    cv2.drawContours(result, filtered_contours, -1, contour_color, contour_thickness)
+
+    # # Draw the index numbers on the result image
+    # for i, c in enumerate(filtered_contours):
+    #     # Calculate the centroid of the contour
+    #     M = cv2.moments(c)
+    #     cx = int(M["m10"] / M["m00"])
+    #     cy = int(M["m01"] / M["m00"])
+    #
+    #     # Draw the index number at the centroid
+    #     cv2.putText(result, str(i), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (255, 0, 0, 255), font_thickness)
+
+    # Save the result image in a format that supports transparency, like PNG
     cv2.imwrite(output_path, result)
 
     return image_to_base64(result)

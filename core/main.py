@@ -29,6 +29,8 @@ class Params(BaseModel):
     min_area_threshold: int
     font_scale: float
     font_thickness: int
+    contour_color: str
+    contour_thickness: int
 
 
 class Image(BaseModel):
@@ -46,8 +48,16 @@ async def process(image: Image):
     downloads_path = os.path.join(Path.home(), "Downloads")
     output_path = os.path.join(downloads_path, "output.png")
 
+    contour_color = hex_to_rgba(image.params.contour_color)
     result = process_image(image.data, output_path, image.params.posterize_levels, image.params.num_clusters,
                            image.params.blur_ksize, image.params.min_area_threshold,
-                           image.params.font_scale, image.params.font_thickness)
+                           image.params.font_scale, image.params.font_thickness,
+                           contour_color, image.params.contour_thickness)
 
     return {"data": result}
+
+
+def hex_to_rgba(hex_color, alpha=255):
+    hex_color = hex_color.lstrip("#")
+    r, g, b = tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+    return b, g, r, alpha

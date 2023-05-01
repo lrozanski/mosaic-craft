@@ -54,6 +54,8 @@ export type ImageProcessingParams = {
     min_area_threshold: number
     font_scale: number
     font_thickness: number
+    contour_color: string
+    contour_thickness: number
 }
 
 const defaultProcessingParams: ImageProcessingParams = {
@@ -63,6 +65,8 @@ const defaultProcessingParams: ImageProcessingParams = {
     min_area_threshold: 3000,
     font_scale: 0.7,
     font_thickness: 2,
+    contour_color: "#000000",
+    contour_thickness: 2,
 }
 
 export const imageStore = writable<string | null>(null)

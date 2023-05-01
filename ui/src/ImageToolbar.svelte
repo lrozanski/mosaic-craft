@@ -1,21 +1,13 @@
 <script lang="ts">
     import {processedImageAlphaStore} from "./stores"
-
-    let processedImageAlpha: number
-
-    processedImageAlphaStore.subscribe(value => processedImageAlpha = value)
-
-    const updateZoom = (e: Event) => {
-        const input = e.currentTarget as HTMLInputElement
-
-        processedImageAlphaStore.set(+input.value)
-    }
 </script>
 
 <div class="image-toolbar">
-    <label for="alpha">Overlay Alpha</label>
-    <input id="alpha" type="range" min="0.0" max="1.0" step="0.01" bind:value={$processedImageAlphaStore}>
-    <span class="w-10 text-center">{processedImageAlpha}</span>
+    <div class="flex flex-row items-center justify-evenly space-x-2">
+        <label for="alpha">Overlay Alpha</label>
+        <input id="alpha" type="range" min="0.0" max="1.0" step="0.01" bind:value={$processedImageAlphaStore}>
+        <span class="w-10 text-center">{$processedImageAlphaStore}</span>
+    </div>
 </div>
 
 <style>
